@@ -1,0 +1,106 @@
+public class zjt extends JFrame {
+ /*首先设置参数*/
+int x = 0;
+int y = 0;
+
+/*主类zjt()： 实现面板 运行游戏 判断输赢 */
+ public zjt() {
+ 	 Container c = getContentPane();          
+  C.setLayout(new FlowLayout());
+  	congxin = new JButton("重新开始红队先下");
+  c.add(congxin);
+  huanse = new JButton("重新开始蓝队先下");
+  c.add(huanse);                                    // 添加两个按钮
+  jl=newJLabel();                                  // 按钮下的标签
+ c.add(jl, BorderLayout.SOUTH);                       //标签的位置
+ 
+  addMouseListener(new MouseAdapter() {              //鼠标监听事件  
+   public void mousePressed(MouseEvent event) {
+  	  if (event.isAltDown()) {
+   	  repaint();
+ 	   }                                        //按钮点击后开始画图调用repaint();方法 绘制棋子
+   	 x = event.getPoint().x; y = event.getPoint().y; int a = mm(x, y);                               //获取鼠标的X  Y坐标
+ if (yin) {jl.setForeground(Color.RED);
+   	  jl.setText("游戏已结束,请重新开始");
+ 	   }                                          //赢了以后出现提示
+    else {
+  	   if (s[a] == 1) {jl.setForeground(Color.RED);
+ 	     jl.setText("   此位置有棋子,请另选位置重新下棋    ");
+     }                                                                 // 判断有棋子的地方不能再下 并给出提示
+
+     	    else {                          
+   	   fa = false; if (a == 1) a1 = 1; …………………………….. 
+ }                                /*若无棋子 鼠标点击后设置参数变为1*/
+
+    	s[a] = 1;
+  	 }
+ 	 });
+  congxin.addActionListener(new ActionListener() {
+ 	  public void actionPerformed(ActionEvent arg0) {
+  	  for (int i = 0; i < s.length; i++) {
+    	 s[i] = 0;
+    	 jj[i] = 0;
+ 	   }
+}                                /*点击按钮从新开始 并初始化 s[i] jj[i]  重新置零*/
+
+
+/*画棋子 paint方法用于绘图 绘制出棋盘*/
+public void paint(Graphics g) { 
+ 	 if (fa) { 
+ 	  super.paint(g);
+  	 int x = 100, y = 100, c = 300, k = 300;
+  	 for (int i = 0; i < 300; i += 100)                  //竖坐标每隔100画一条线
+  	  g.drawRect(x, y + i, c, k - i);
+ 	  for (int i = 0; i < 300; i += 100 )                  //很坐标每隔100画一条竖线
+   	 g.drawRect(x + i, y, c - i, k);
+ 	 } 
+   /*绘制红色的X棋子 并且该处参数变为1  每当其中一方下好一个后轮到对方下*/                                   
+ 	 else {
+  	 jl.setForeground(Color.black);
+ 	  if (huatu) {
+   	 g.setColor(Color.red);
+ 	   if (a1 == 1) {
+    	 g.drawLine(120, 120, 180, 180);
+    	 g.drawLine(180, 120, 120, 180);   
+    	 a1 = 0;
+    	 jj[1] = 1;
+   	 }                                    
+  	  ……………………
+}                                 
+   	 huatu = false;                    
+  	  jl.setText("蓝队下棋");                   
+ 	  } 
+/*绘制蓝方棋子 蓝色的O  绘制完成参数变为1 */
+else {
+           	 g.setColor(Color.blue);
+           	 if (a1 == 1) {
+    	 g.drawOval(125, 125, 50, 50);      //棋子O的位置大小
+    	 a1 = 0;
+     	jj[1] = 2;
+   	 }
+  	 ……………………………………
+ 	  
+ 	  }                                 
+dd();                           
+ 	 }
+ }
+/*判断鼠标点击位置有没有在范围内 在的话参数由0变为1*/
+       public int mm(int x, int y) {
+         if (x >= 100 && x < 200 && y >= 100 && y < 200)
+         a = 1;
+        else if (x >= 200 && x < 300 && y >= 100 && y < 200)
+         a = 2;
+        ……………………..
+       else
+       a = 0;
+       return a;
+      }
+
+/*判断输赢、有连着的三个部分为相同则获胜否则都不获胜 并给出提示*/
+public void dd() {
+if (jj[1] == 1 && jj[2] == 1 && jj[3] == 1) {
+       jl.setForeground(Color.RED);
+       jl.setText("红方获胜,连接线1,2,3");
+       yin = true;
+        }
+ }
